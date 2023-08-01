@@ -7,9 +7,9 @@ function add() {
     counter++
     gridItem.innerText = counter
     gridItem.setAttribute('class', `card item-${counter}`)
-    gridItem.setAttribute('onmouseenter', 'add()')
+    gridItem.addEventListener('mouseenter', add)
 
-    container.appendChild(gridItem)
+    container.append(gridItem)
 }
 
 
