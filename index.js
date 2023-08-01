@@ -1,12 +1,14 @@
-const container = document.querySelector('.container')
+const container = document.getElementById('container')
+const starterMessage = document.getElementById('starter-message')
 
-let counter = 1
+let counter = 0
+
+
 function add() {
 
     const gridItem = document.createElement('div')
-    counter++
-    gridItem.innerText = counter
-    gridItem.setAttribute('class', `card item-${counter}`)
+    gridItem.innerText = ++counter
+    gridItem.classList.add('card', `item-${counter}`)
     gridItem.addEventListener('mouseenter', add)
 
     container.append(gridItem)
@@ -15,10 +17,13 @@ function add() {
 
 function remove() {
     const gridItem = document.querySelector(`.item-${counter}`)
-    if (gridItem) {
-        gridItem.remove()
-        counter--   
-    }
+
+    if (!gridItem) return
+
+    gridItem.removeEventListener('mouseenter', add)
+    gridItem.remove()
+    counter--
+
 }
 
 
@@ -33,3 +38,13 @@ document.body.addEventListener('keypress', ({ target, key }) => {
             break
     }
 })
+
+
+
+function updateStarterMessage() {
+    starterMessage.style.display = counter > 0 ? 'none' : 'block'
+}
+
+
+const containerObserver = new MutationObserver(updateStarterMessage)
+containerObserver.observe(container, { childList: true })
